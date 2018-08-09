@@ -87,7 +87,7 @@ $( document ).ready( function () {
 				}
 
 				result[ i ] = newPopulation;
-				if ( newPopulation <= ( -immigrationFactor ) || newPopulation >= Infinity ) {
+				if ( ( newPopulation <= -immigrationFactor ) || ( newPopulation >= Infinity ) ) {
 					break;
 				}
 			}
@@ -109,14 +109,14 @@ $( document ).ready( function () {
 			var data, graphData, resultsOnly, timeframeSolution, text, textBeforeTime, parts,
 				isBuffy = $isBuffy.prop( 'checked' ),
 				hasImmigration = $hasImmigration.prop( 'checked' ),
-				varInitPopulation = math.eval( $initial.val() ) || 5,
-				varGrowthFactorTimeframe = math.eval( $growthFactorTimeframe.val() ) || 7,
-				varBuffyDampeningTimeframe = math.eval( $buffyFactorTimeframe.val() ) || 7,
-				varGrowthFactor = ( math.eval( $growthFactor.val() ) || 2 ) / varGrowthFactorTimeframe,
-				varBuffyDampening = ( math.eval( $buffyFactor.val() ) || 2 ) / varBuffyDampeningTimeframe,
-				varTimeframe = math.eval( $resultTimeframe.val() ),
-				varImmigration = ( math.eval( $vampImmigration.val() ) || 0 ),
-				varImmigrationTimeframe = ( math.eval( $vampImmigrationTimeframe.val() ) || 7 );
+				varInitPopulation = parseInt( $initial.val() || 5),
+				varGrowthFactorTimeframe = parseInt( $growthFactorTimeframe.val() || 7 ),
+				varBuffyDampeningTimeframe = parseInt( $buffyFactorTimeframe.val() || 7 ),
+				varGrowthFactor = ( $growthFactor.val() || 2 ) / varGrowthFactorTimeframe,
+				varBuffyDampening = ( $buffyFactor.val() || 2 ) / varBuffyDampeningTimeframe,
+				varTimeframe = parseInt( $resultTimeframe.val() ),
+				varImmigration = ( parseInt( $vampImmigration.val() || 0 ) ),
+				varImmigrationTimeframe = ( parseInt( $vampImmigrationTimeframe.val() || 7 ) );
 
 			data = getResultsForDays(
 				varInitPopulation,
