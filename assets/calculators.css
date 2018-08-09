@@ -6,6 +6,12 @@
 	margin-bottom: 1em;
 }
 
+.bc-equation {
+	font-size: 1.2em;
+	padding: 0.5em;
+	font-family: monospace;
+}
+
 .bc-calculator-form .form-control {
 	width: auto;
 	display: inline-block;

@@ -68,7 +68,7 @@
 				</div>
 			</div>
 			<div class="alert alert-info" role="alert">
-				Play around with the numbers below to see how vampires (and buffy) fares. You can check "Activate Buffy!" to include Buffy slaying vampires in the calculation.
+				Play around with the numbers below to see how vampires (and buffy) fares. <br />You can check "Activate Buffy!" to include Buffy slaying vampires in the calculation.
 			</div>
 
 			<!-- form -->
@@ -113,6 +113,23 @@
 
 			<!-- Graph -->
 			<canvas class="my-4 w-100" id="vampChart" width="900" height="380"></canvas>
+
+
+			<a class="btn btn-info" data-toggle="collapse" href="#collapseCalculation" role="button" aria-expanded="false" aria-controls="collapseCalculation">Show calculation</a>
+			<div id="collapseCalculation" class="collapse">
+				<div class="card card-body">
+					The calculation is done according to the growth equation:
+					<p class='bc-equation'><strong>Final population of vampires = StartingPopulation * e<sup>GrowthFactor * Time</sup></strong></p>
+					<p>When Buffy is deployed, we need to remove the number of vampires she's slaying from the final population, but the calculation needs to be recursive per however long she's slaying, so we take into account the diminished population for the next "starting" population.</p>
+					<p>To do that, we convert all numbers for daily occurences first -- meaning, if Buffy slays 1 vampire per week, the daily number is 1/7 vampires.</p>
+					<p>Next we recursively calculate the growth, but take away the slayed vampires:</p>
+					<p class='bc-equation'><strong>Final population of vampires for one day =<br/> StartingPopulation * e<sup>GrowthFactorForOneDay * 1 Day</sup> - VampiresSlainPerDay</strong></p>
+					<p>For the next day, we use the 'final population' as the 'starting population' of the next day, and collect all that data into the graph.</p>
+				</div>
+			</div>
+
+
+
         </div>
       </div>
 
