@@ -1,0 +1,146 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Moriel Schottlender">
+	<meta name="description" content="Calculators and graphs exploring the science of the Buffyverse">
+	<!-- <link rel="icon" href="../../../../favicon.ico"> -->
+
+    <title>BuffyCalculator : Scientific explorations of the Buffyverse</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../assets/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+	<link href="../assets/album.css" rel="stylesheet">
+	<link href="../assets/calculators.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+	  <header>
+        <div class="collapse bg-dark" id="navbarHeader">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-8 col-md-7 py-4">
+                <h4 class="text-white">About</h4>
+                <p class="text-muted">Scientific explorations of the Buffyverse.</p>
+  			  <p><a class="btn btn-primary" href="../index.html" role="button">More calculators</a></p>
+  			  <p><a class="btn btn-secondary" href="../whatisthis.html" role="button">What is this?</a></p>
+              </div>
+              <div class="col-sm-4 offset-md-1 py-4">
+                <h4 class="text-white">Information</h4>
+                <ul class="list-unstyled">
+  				<li><a href="http://github.com/mooeypoo/BuffyCalculator" target="_blank" class="text-white">The code</a></li>
+                  <li><a href="http://twitter.com/mooeypoo" target="_blank" class="text-white">@mooeypoo</a></li>
+  				<li><a href="http://moriel.smarterthanthat.com" target="_blank" class="text-white">My Blog</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="navbar navbar-dark bg-dark shadow-sm">
+          <div class="container d-flex justify-content-between">
+            <a href="index.html" class="navbar-brand d-flex align-items-center">
+              <strong>BuffyCalculator</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+    <main role="main">
+
+
+      <div class="album py-5 bg-light">
+        <div class="container">
+
+			<h1 class="bc-title">Calculator: Vampire Growth<a class="btn btn-secondary" data-toggle="collapse" href="#collapsePreamble" role="button" aria-expanded="false" aria-controls="collapseExample">Preamble</a></h1>
+			<div id="collapsePreamble" class="collapse">
+				<div class="card card-body">
+					If vampires create more vampires, how long would it take for them to take over the world?<br />
+					If Buffy kills vampires, at what rate would she need to kill them to preserve the balance?<br />
+					Would vampires go extinct? Would Buffy prevail? Does she even have a chance?!
+				</div>
+			</div>
+			<div class="alert alert-info" role="alert">
+				Play around with the numbers below to see how vampires (and buffy) fares. You can check "Activate Buffy!" to include Buffy slaying vampires in the calculation.
+			</div>
+
+			<!-- form -->
+			<div class="bc-calculator-buffy">
+				<div class="form-group">
+				    <div class="form-check">
+				      <input class="form-check-input" type="checkbox" value="" id="vampgrowth-buffy">
+				      <label class="form-check-label" for="vampgrowth-buffy">
+				        Activate Buffy!
+				      </label>
+				    </div>
+				  </div>
+			</div>
+			<div class="bc-calculator-form">
+				<div class="bc-calculator-form-line">If there are, right now, <input type="number" min="0" value="10" class="form-control" id="vampgrowth-initial"> vampires that can sire others.</div>
+				<div class="bc-calculator-form-line">And each of them creates <input type="number" min="0" value="20" class="form-control" id="vampgrowth-growthfactor"> vampires per
+					<select id="vampgrowth-growthfactor-timeframe" class="form-control">
+						<option value="1">per day</option>
+						<option value="7">per week</option>
+						<option value="30">per month</option>
+						<option value="365" selected>per year</option>
+					</select>
+				</div>
+				<div class="bc-buffyactive-only bc-calculator-form-line">But Buffy slays <input type="number" min="0" value="2" class="form-control" id="vampgrowth-buffyfactor"> vampires per
+					<select id="vampgrowth-buffyfactor-timeframe" class="form-control">
+						<option value="1" selected>per day</option>
+						<option value="7">per week</option>
+						<option value="30">per month</option>
+						<option value="365">per year</option>
+					</select>
+				</div>
+				<div class="bc-calculator-form-line"><strong>Then,</strong> after
+					<select id="vampgrowth-result-timeframe" class="form-control">
+						<option value="7">one week</option>
+						<option value="30">one month</option>
+						<option value="182.5">six months</option>
+						<option value="365" selected>one year</option>
+						<option value="730">two years</option>
+						<option value="1825">five years</option>
+						<option value="3650">ten years</option>
+					</select>
+					<div class="vampgrowth-result"> there will be <span class="vampgrowth-result-num">x</span> vampires</div>
+					<div class="alert alert-danger vampgrowth-result-beforetime" role="alert"></div>
+				</div>
+			</div>
+
+			<!-- Graph -->
+			<canvas class="my-4 w-100" id="vampChart" width="900" height="380"></canvas>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="text-muted">
+      <div class="container">
+        <p class="float-right">
+          <a href="#">Back to top</a>
+        </p>
+        <p>BuffyCalculator &copy; Moriel Schottlender, license MIT. The entire site and code is <a href="http://github.com/mooeypoo/BuffyCalculator">available on github</a>; please consider contributing!</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../assets/jquery-slim.min.js"><\/script>')</script>
+    <script src="../assets/popper.min.js"></script>
+    <script src="../assets/bootstrap.min.js"></script>
+	<script src="../assets/formurlator.oojs.min.js"></script>
+	<script src="../assets/mathjs.min.js"></script>
+	<script src="../assets/chart.min.js"></script>
+	<script src="js/vampgrowth.init.js"></script>
+  </body>
+</html>

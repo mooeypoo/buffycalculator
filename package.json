@@ -1,0 +1,30 @@
+{
+  "name": "BuffyCalculator",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Calculators and graphs exploring the science of the Buffyverse",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": "https://github.com/mooeypoo/FictionMath",
+  "bugs": "https://github.com/mooeypoo/FictionMath/issues",
+  "license": "GPL-3.0-or-later",
+  "author": {
+    "name": "Moriel Schottlender",
+    "email": "mooeypoo@gmail.com",
+    "url": "http://moriel.smarterthanthat.com"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.2",
+    "grunt-contrib-watch": "1.0.0",
+	"eslint-config-wikimedia": "^0.5.0",
+    "grunt-eslint": "20.1.0",
+	"grunt-contrib-concat": "^1.0.1",
+	"grunt-contrib-qunit": "^2.0.0",
+    "qunit": "^2.6.1"
+ },
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
+}

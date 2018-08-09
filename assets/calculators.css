@@ -1,0 +1,57 @@
+.bc-title .btn {
+	margin-left: 1em;
+}
+
+.card {
+	margin-bottom: 1em;
+}
+
+.bc-calculator-form .form-control {
+	width: auto;
+	display: inline-block;
+	margin: 0 0.5em;
+}
+.bc-calculator-form .bc-calculator-form-line {
+	margin: 1em 0;
+}
+
+.bc-calculator-form .vampgrowth-result {
+	display: inline-block;
+}
+
+.bc-calculator-form #vampgrowth-initial,
+.bc-calculator-form #vampgrowth-growthfactor {
+	width: 10em;
+}
+
+.vampgrowth-result-num {
+	font-weight: bold;
+	color: red;
+}
+
+.vampgrowth-result-beforetime {
+	margin-top: 1em;
+	text-align: center;
+	font-weight: bold;
+	display: none;
+}
+
+.bc-calculator-buffy {
+	display: inline-block;
+	margin: 0 1em;
+}
+
+.bc-buffyactive-only {
+	display: none;
+	background: #dff0d8;
+    padding: 1em;
+}
+.bc-buffyactive .bc-buffyactive-only {
+	display: block;
+}
+
+@media (min-width: 768px) {
+	.bc-calculator-buffy {
+		float: right;
+	}
+}
