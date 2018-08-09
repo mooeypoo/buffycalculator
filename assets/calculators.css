@@ -42,19 +42,23 @@
 	display: none;
 }
 
+.bc-calculator-immigration,
 .bc-calculator-buffy {
 	display: inline-block;
 	margin: 0 1em;
 }
 
+.bc-calculator-immigration,
 .bc-buffyactive-only {
 	display: none;
 	background: #dff0d8;
     padding: 1em;
 }
+.bc-immigrationactive .bc-calculator-immigration,
 .bc-buffyactive .bc-buffyactive-only {
 	display: block;
 }
+
 
 @media (min-width: 768px) {
 	.bc-calculator-buffy {

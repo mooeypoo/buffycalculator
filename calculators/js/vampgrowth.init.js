@@ -51,52 +51,43 @@ $( document ).ready( function () {
 		 * @param {Number} [cullingFactor] A factor of how many of the
 		 *  population were removed at the end of the day
 		 * @param {Number} numDays Number of days to calculate
-		 * @param {Number} maxResults Maximum results represented
-		 *  This will be used to decide the step size where results
-		 *  are recorded.
+		 * @param {Number} immigrationFactor Number of new people coming in
+		 * @param {Number} immigrationTimeframe The timeframe for which new people come in, in days
 		 * @return {Object} Population at the given days
 		 */
-		getResultsForDays = function ( initialPopulation, growthFactor, cullingFactor, numDays, maxResults ) {
+		getResultsForDays = function ( initialPopulation, growthFactor, cullingFactor, numDays, immigrationFactor, immigrationTimeframe ) {
 			var i,
 				result = {},
 				counter = 0,
-				stepSize = numDays,
-				newPopulation = initialPopulation,
-				displayData = {};
-
-			maxResults = maxResults || 20;
-
-			if ( numDays > maxResults ) {
-				stepSize = Math.floor( numDays / maxResults );
-			}
+				newPopulation = initialPopulation;
 
 			// Sanity check; don't allow for more than 10 years
 			if ( numDays > 3650 ) {
 				return {};
 			}
 
-			counter = 1;
+			counter = 0;
+
 			for ( i = 1; i <= numDays; i++ ) {
+				counter++;
+				if ( counter === immigrationTimeframe ) {
+					// Every X time, add more people
+					newPopulation += immigrationFactor;
+					counter = 0;
+				}
+
 				newPopulation = getPopulationGrowthForOneDay(
 					newPopulation,
 					growthFactor,
 					cullingFactor
 				);
 
+				if ( newPopulation < 0 ) {
+					newPopulation = 0;
+				}
+
 				result[ i ] = newPopulation;
-				if ( counter === stepSize ) {
-					displayData[ i ] = newPopulation;
-					counter = 1;
-				}
-				counter++;
-
-				if ( newPopulation <= 0 ) {
-					displayData[ i ] = 0;
-					break;
-				}
-
-				if ( newPopulation >= Infinity ) {
-					displayData[ i ] = Infinity;
+				if ( newPopulation <= ( -immigrationFactor ) || newPopulation >= Infinity ) {
 					break;
 				}
 			}
@@ -108,24 +99,32 @@ $( document ).ready( function () {
 		$growthFactor = $( '#vampgrowth-growthfactor' ),
 		$growthFactorTimeframe = $( '#vampgrowth-growthfactor-timeframe' ),
 		$isBuffy = $( '#vampgrowth-buffy' ),
+		$hasImmigration = $( '#vampgrowth-hasimmigration' ),
 		$buffyFactor = $( '#vampgrowth-buffyfactor' ),
 		$buffyFactorTimeframe = $( '#vampgrowth-buffyfactor-timeframe' ),
 		$resultTimeframe = $( '#vampgrowth-result-timeframe' ),
+		$vampImmigration = $( '#vampgrowth-immigration' ),
+		$vampImmigrationTimeframe = $( '#vampgrowth-immigration-timeframe' ),
 		update = function () {
 			var data, graphData, resultsOnly, timeframeSolution, text, textBeforeTime, parts,
 				isBuffy = $isBuffy.prop( 'checked' ),
+				hasImmigration = $hasImmigration.prop( 'checked' ),
 				varInitPopulation = math.eval( $initial.val() ) || 5,
 				varGrowthFactorTimeframe = math.eval( $growthFactorTimeframe.val() ) || 7,
 				varBuffyDampeningTimeframe = math.eval( $buffyFactorTimeframe.val() ) || 7,
 				varGrowthFactor = ( math.eval( $growthFactor.val() ) || 2 ) / varGrowthFactorTimeframe,
 				varBuffyDampening = ( math.eval( $buffyFactor.val() ) || 2 ) / varBuffyDampeningTimeframe,
-				varTimeframe = math.eval( $resultTimeframe.val() );
+				varTimeframe = math.eval( $resultTimeframe.val() ),
+				varImmigration = ( math.eval( $vampImmigration.val() ) || 0 ),
+				varImmigrationTimeframe = ( math.eval( $vampImmigrationTimeframe.val() ) || 7 );
 
 			data = getResultsForDays(
 				varInitPopulation,
 				varGrowthFactor,
 				isBuffy ? varBuffyDampening : 0,
 				varTimeframe,
+				hasImmigration ? varImmigration : 0,
+				hasImmigration ? varImmigrationTimeframe : 0,
 				50
 			);
 			resultsOnly = Object.values( data );
@@ -136,10 +135,10 @@ $( document ).ready( function () {
 			text = '';
 			if ( Number( timeframeSolution ) <= 0 ) {
 				text = 'ZERO';
-				textBeforeTime = 'There will be no more vampires after ' + resultsOnly.length + ' days';
+				textBeforeTime = 'There will be no more vampires after ' + resultsOnly.indexOf( 0 ) + ' days';
 			} else if ( timeframeSolution === Infinity ) {
 				text = 'infinite';
-				textBeforeTime = 'There will be too many vampires to count after ' + resultsOnly.length + ' days';
+				textBeforeTime = 'There will be too many vampires to count after ' + resultsOnly.indexOf( Infinity ) + ' days';
 			} else {
 				if ( ( String( timeframeSolution ) ).indexOf( 'e+' ) !== -1 ) {
 					parts = String( timeframeSolution ).split( 'e+' );
@@ -202,12 +201,18 @@ $( document ).ready( function () {
 			'#vampgrowth-buffy',
 			'#vampgrowth-buffyfactor',
 			'#vampgrowth-buffyfactor-timeframe',
-			'#vampgrowth-result-timeframe'
+			'#vampgrowth-result-timeframe',
+			'#vampgrowth-immigration-timeframe',
+			'#vampgrowth-immigration',
+			'#vampgrowth-hasimmigration'
 		].join( ', ' )
 	).on( 'change', function () { update(); } );
 
 	$isBuffy.on( 'change', function () {
 		$( 'body' ).toggleClass( 'bc-buffyactive', $( this ).prop( 'checked' ) );
+	} );
+	$hasImmigration.on( 'change', function () {
+		$( 'body' ).toggleClass( 'bc-immigrationactive', $( this ).prop( 'checked' ) );
 	} );
 
 	// Initialization
@@ -218,12 +223,17 @@ $( document ).ready( function () {
 		g: $growthFactor[ 0 ],
 		gtf: $growthFactorTimeframe[ 0 ],
 		buffy: $isBuffy[ 0 ],
+		imm: $hasImmigration[ 0 ],
 		b: $buffyFactor[ 0 ],
 		btf: $buffyFactorTimeframe[ 0 ],
-		rtf: $resultTimeframe[ 0 ]
+		rtf: $resultTimeframe[ 0 ],
+		vim: $vampImmigration[ 0 ],
+		vimtf: $vampImmigrationTimeframe[ 0 ]
 	} );
 
-	$( 'body' ).toggleClass( 'bc-buffyactive', $( '#vampgrowth-buffy' ).prop( 'checked' ) );
+	$( 'body' )
+		.toggleClass( 'bc-buffyactive', $( '#vampgrowth-buffy' ).prop( 'checked' ) )
+		.toggleClass( 'bc-immigrationactive', $( '#vampgrowth-hasimmigration' ).prop( 'checked' ) );
 	$( '.vampgrowth-result-beforetime' ).toggle( false );
 	update();
 } );
