@@ -30,6 +30,10 @@
 	width: 10em;
 }
 
+.bc-collapse-button {
+	margin-bottom: 0.5em;
+}
+
 .vampgrowth-result-vampilibrium {
 	display: none;
 	text-align: center;
