@@ -13,46 +13,17 @@ $( document ).ready( function () {
 			return Number.parseFloat( num ).toPrecision( precision );
 		},
 		/**
-		 * Solve the growth equation
-		 *
-		 * @param  {Number} initialPopulation Initial population
-		 * @param  {Number} growthFactor Growth factor
-		 * @param  {Number} [time] Given time in days
-		 * @return {Number} Population at the given time
-		 */
-		solveGrowthEquation = function ( initialPopulation, growthFactor, time ) {
-			time = time || 1;
-
-			if ( initialPopulation < 0 ) {
-				return 0;
-			}
-
-			return initialPopulation * Math.exp( growthFactor * time );
-		},
-		/**
-		 * Solve the growth equation for a single day
-		 *
-		 * @param {Number} initialPopulation Initial population
-		 * @param {Number} growthFactor Growth factor
-		 * @param {Number} [cullingFactor] A factor of how many of the
-		 *  population were removed at the end of the day
-		 * @return {Number} Population at the given time
-		 */
-		getPopulationGrowthForOneDay = function ( initialPopulation, growthFactor, cullingFactor ) {
-			cullingFactor = cullingFactor || 0;
-
-			return solveGrowthEquation( initialPopulation, growthFactor, 1 ) - cullingFactor;
-		},
-		/**
 		 * Get the solutions for given amount of days.
 		 *
 		 * @param {Number} initialPopulation Initial population
 		 * @param {Number} growthFactor Growth factor
+		 * @param {Number} growthFactorTimeframe Growth factor timeframe
 		 * @param {Number} [cullingFactor] A factor of how many of the
 		 *  population were removed at the end of the day
+		 * @param {Number} [cullingFactorTimeframe] Timeframe for culling factor
+		 * @param {Number} [immigrationFactor] Number of new people coming in
+		 * @param {Number} [immigrationTimeframe] The timeframe for which new people come in, in days
 		 * @param {Number} numDays Number of days to calculate
-		 * @param {Number} immigrationFactor Number of new people coming in
-		 * @param {Number} immigrationTimeframe The timeframe for which new people come in, in days
 		 * @return {Object} Population at the given days
 		 */
 		getResultsForDays = function (
@@ -103,7 +74,7 @@ $( document ).ready( function () {
 				}
 
 				// Round, because Vampires are integers
-				population = Math.floor( population );
+				population = Math.round( population );
 
 				// Fix for negative value
 				if ( population < 0 ) {
@@ -186,6 +157,16 @@ $( document ).ready( function () {
 				.html( textBeforeTime )
 				.toggle( !!textBeforeTime );
 
+			// If all results are the same
+			// we've reached VAMPILIBRIUM!
+			$( '.vampgrowth-result-vampilibrium' )
+				.toggle(
+					resultsOnly.every( function ( val ) {
+						return val === resultsOnly[ 0 ] &&
+							val !== 0;
+					} )
+				);
+
 			// Build graph data
 			graphData = {
 				labels: Object.keys( data ),
@@ -210,17 +191,17 @@ $( document ).ready( function () {
 			type: 'line',
 			options: {
 				responsive: true,
-				// scales: {
-				// 	xAxes: [ {
-				// 		scaleLabel: {
-				// 			display: true,
-				// 			labelString: 'Date'
-				// 		}
-				// 	} ],
-				// 	yAxes: [ {
-				// 		ticks: { beginAtZero: true }
-				// 	} ]
-				// },
+				scales: {
+					xAxes: [ {
+						scaleLabel: {
+							display: true,
+							labelString: 'Date'
+						}
+					} ],
+					yAxes: [ {
+						ticks: { beginAtZero: true }
+					} ]
+				},
 				legend: { display: false }
 			}
 		} );
@@ -268,5 +249,6 @@ $( document ).ready( function () {
 		.toggleClass( 'bc-buffyactive', $( '#vampgrowth-buffy' ).prop( 'checked' ) )
 		.toggleClass( 'bc-immigrationactive', $( '#vampgrowth-hasimmigration' ).prop( 'checked' ) );
 	$( '.vampgrowth-result-beforetime' ).toggle( false );
+	$( '.vampgrowth-result-vampilibrium' ).toggle( false );
 	update();
 } );

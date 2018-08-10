@@ -30,6 +30,10 @@
 	width: 10em;
 }
 
+.vampgrowth-result-vampilibrium {
+	text-align: center;
+}
+
 .vampgrowth-result-num {
 	font-weight: bold;
 	color: red;
