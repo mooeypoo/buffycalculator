@@ -55,39 +55,65 @@ $( document ).ready( function () {
 		 * @param {Number} immigrationTimeframe The timeframe for which new people come in, in days
 		 * @return {Object} Population at the given days
 		 */
-		getResultsForDays = function ( initialPopulation, growthFactor, cullingFactor, numDays, immigrationFactor, immigrationTimeframe ) {
+		getResultsForDays = function (
+			initialPopulation,
+			growthFactor,
+			growthFactorTimeframe,
+			cullingFactor,
+			cullingFactorTimeframe,
+			immigrationFactor,
+			immigrationTimeframe,
+			numDays
+		) {
 			var i,
 				result = {},
-				counter = 0,
-				newPopulation = initialPopulation;
+				counter = {
+					growth: 0,
+					culling: 0,
+					immigration: 0
+				},
+				upAllCounters = function () {
+					counter.growth++;
+					counter.culling++;
+					counter.immigration++;
+				},
+				population = initialPopulation;
 
 			// Sanity check; don't allow for more than 10 years
 			if ( numDays > 3650 ) {
 				return {};
 			}
 
-			counter = 0;
-
 			for ( i = 1; i <= numDays; i++ ) {
-				counter++;
-				if ( counter === immigrationTimeframe ) {
-					// Every X time, add more people
-					newPopulation += immigrationFactor;
-					counter = 0;
+				upAllCounters();
+
+				if ( counter.growth % growthFactorTimeframe === 0 ) {
+					// Add vampire growth
+					population += population * growthFactor;
 				}
 
-				newPopulation = getPopulationGrowthForOneDay(
-					newPopulation,
-					growthFactor,
-					cullingFactor
-				);
-
-				if ( newPopulation < 0 ) {
-					newPopulation = 0;
+				if ( counter.culling % cullingFactorTimeframe === 0 ) {
+					// Remove vampires
+					population -= cullingFactor;
 				}
 
-				result[ i ] = newPopulation;
-				if ( newPopulation <= ( -immigrationFactor ) || newPopulation >= Infinity ) {
+				if ( counter.immigration % immigrationTimeframe === 0 ) {
+					// Add vampires
+					population += immigrationFactor;
+				}
+
+				// Round, because Vampires are integers
+				population = Math.floor( population );
+
+				// Fix for negative value
+				if ( population < 0 ) {
+					population = 0;
+				}
+				// Store
+				result[ i ] = population;
+
+				// Avoid going way out of range
+				if ( population <= ( -immigrationFactor ) || population >= Infinity ) {
 					break;
 				}
 			}
@@ -107,24 +133,31 @@ $( document ).ready( function () {
 		$vampImmigrationTimeframe = $( '#vampgrowth-immigration-timeframe' ),
 		update = function () {
 			var data, graphData, resultsOnly, timeframeSolution, text, textBeforeTime, parts,
+				getInputValue = function ( val, fallback ) {
+					fallback = fallback || 0;
+
+					return val !== '' ? val : fallback;
+				},
 				isBuffy = $isBuffy.prop( 'checked' ),
 				hasImmigration = $hasImmigration.prop( 'checked' ),
-				varInitPopulation = math.eval( $initial.val() ) || 5,
-				varGrowthFactorTimeframe = math.eval( $growthFactorTimeframe.val() ) || 7,
-				varBuffyDampeningTimeframe = math.eval( $buffyFactorTimeframe.val() ) || 7,
-				varGrowthFactor = ( math.eval( $growthFactor.val() ) || 2 ) / varGrowthFactorTimeframe,
-				varBuffyDampening = ( math.eval( $buffyFactor.val() ) || 2 ) / varBuffyDampeningTimeframe,
-				varTimeframe = math.eval( $resultTimeframe.val() ),
-				varImmigration = ( math.eval( $vampImmigration.val() ) || 0 ),
-				varImmigrationTimeframe = ( math.eval( $vampImmigrationTimeframe.val() ) || 7 );
+				varInitPopulation = math.eval( getInputValue( $initial.val(), 5 ) ),
+				varGrowthFactor = math.eval( getInputValue( $growthFactor.val(), 2 ) ),
+				varGrowthFactorTimeframe = math.eval( getInputValue( $growthFactorTimeframe.val(), 7 ) ),
+				varBuffyDampening = math.eval( getInputValue( $buffyFactor.val(), 2 ) ),
+				varBuffyDampeningTimeframe = math.eval( getInputValue( $buffyFactorTimeframe.val(), 7 ) ),
+				varImmigration = math.eval( getInputValue( $vampImmigration.val(), 0 ) ),
+				varImmigrationTimeframe = math.eval( getInputValue( $vampImmigrationTimeframe.val(), 7 ) ),
+				varResultTimeframe = math.eval( $resultTimeframe.val() );
 
 			data = getResultsForDays(
 				varInitPopulation,
 				varGrowthFactor,
+				varGrowthFactorTimeframe,
 				isBuffy ? varBuffyDampening : 0,
-				varTimeframe,
+				isBuffy ? varBuffyDampeningTimeframe : null,
 				hasImmigration ? varImmigration : 0,
-				hasImmigration ? varImmigrationTimeframe : 0,
+				hasImmigration ? varImmigrationTimeframe : null,
+				varResultTimeframe,
 				50
 			);
 			resultsOnly = Object.values( data );

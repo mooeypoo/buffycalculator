@@ -134,16 +134,36 @@
 			<a class="btn btn-info" data-toggle="collapse" href="#collapseCalculation" role="button" aria-expanded="false" aria-controls="collapseCalculation">Show calculation</a>
 			<div id="collapseCalculation" class="collapse">
 				<div class="card card-body">
-					The calculation is done according to the growth equation:
+					The calculation is inspired by the growth equation:
 					<p class='bc-equation'><strong>Final population of vampires = StartingPopulation * e<sup>GrowthFactor * Time</sup></strong></p>
-					<p>When Buffy is deployed, we need to remove the number of vampires she's slaying from the final population, but the calculation needs to be recursive per however long she's slaying, so we take into account the diminished population for the next "starting" population.</p>
-					<p>To do that, we convert all numbers for daily occurences first -- meaning, if Buffy slays 1 vampire per week, the daily number is 1/7 vampires.</p>
-					<p>Next we recursively calculate the growth, but take away the slayed vampires:</p>
-					<p class='bc-equation'><strong>Final population of vampires for one day =<br/> StartingPopulation * e<sup>GrowthFactorForOneDay * 1 Day</sup> - VampiresSlainPerDay</strong></p>
-					<p>For the next day, we use the 'final population' as the 'starting population' of the next day, and collect all that data into the graph.</p>
+					<p>However, we calculate the results per day, in incremental steps, so using the exponential function makes no sense. Instead, we break it apart:</p>
+					<p>For each day, we check whether we reached the timeframe for either vampires siring others, buffy eliminates vampires, or vampires are immigrating in.</p>
+					<p>If we reach the timeframe for either, we add or remove accordingly:</p>
+					<ul>
+						<li>For vampire growth, when the number of days is reached, we add a multiplication of the population growth: <strong>population = population + ( population * vampiresEachSires )</strong></li>
+						<li>For Buffy's slaying, when the number of days is reached, we remove however many vampires she's slain: <strong>population = population - slainVampires</strong></li>
+						<li>For vampire immigration, when the number of days is reaced, we add the number of arriving vampires: <strong>population = population + newVampires</strong></li>
+					</ul>
+					<p>The combined result, per day, is the stored and presented in the graph.</p>
 				</div>
 			</div>
 
+			<a class="btn btn-info" data-toggle="collapse" href="#collapseChangeLog" role="button" aria-expanded="false" aria-controls="collapseChangeLog">Show updates and changes</a>
+			<div id="collapseChangeLog" class="collapse">
+				<div class="card card-body">
+					<p>It's super exciting to see the awesome reception for this tool!</p>
+					<p>A number of people have pointed out some bugs and errors in the code or calculations that resulted in changes:</p>
+					<ul>
+						<li>The initial calculation was ovredoing the exponentiation, and the results appeared exaggerated. <a href="https://github.com/mooeypoo/buffycalculator/issues/2" target="_blank">This was fixed.</a><br /> Thanks a bunch to Lee Biernbaum for noticing!</li>
+						<li>Inputs had a bad way of falling-back if there was no data, which basically made choosing 0 impossible. This was fixed.<br />Huge thank you to <a href="https://github.com/jeffreylovitz" target="_blank">Jeffrey Lovitz</a> for finding this and submitting a pull request!</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="alert alert-info" role="alert">
+				<p>Did you spot an issue? A problem with the code, or the calculation? Do you have an idea I should add in to this calculator, or create any other calculators?<br />
+				You can submit <a href="https://github.com/mooeypoo/buffycalculator/issues/new" target="_blank">an "issue" on Github</a>, <a href="http://moriel.smarterthanthat.com/contact/">contact me directly by sending me a note</a>, or say hi on twitter (<a href="http://www.twitter.com/mooeypoo" target="_blank">@mooeypoo</a>)</p>
+			</div>
 
 
         </div>
