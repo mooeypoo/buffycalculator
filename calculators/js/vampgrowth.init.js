@@ -144,12 +144,11 @@ $( document ).ready( function () {
 				text = 'infinite';
 				textBeforeTime = 'There will be too many vampires to count after ' + resultsOnly.indexOf( Infinity ) + ' days';
 			} else {
-				if ( ( String( timeframeSolution ) ).indexOf( 'e+' ) !== -1 ) {
-					parts = String( timeframeSolution ).split( 'e+' );
-					text = precise( parts[ 0 ], 3 ) +
+				text = precise( timeframeSolution );
+				if ( ( String( text ) ).indexOf( 'e+' ) !== -1 ) {
+					parts = String( text ).split( 'e+' );
+					text = parts[ 0 ] +
 						'&times;10<sup>' + parts[ 1 ] + '</sup>';
-				} else {
-					text = precise( timeframeSolution );
 				}
 			}
 			$( '.vampgrowth-result-num' ).html( text );
