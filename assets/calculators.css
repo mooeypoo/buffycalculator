@@ -5,6 +5,24 @@
 .card {
 	margin-bottom: 1em;
 }
+.bc-initallyhidden {
+	display: none;
+}
+
+.bc-label {
+	padding: 0.5em;
+	border-radius: 0.8em;
+}
+
+.bc-label.bc-pink {
+	background-color: #ffb6e2;
+	border: 1px solid #ff0098;
+}
+.bc-label.bc-blue {
+	background-color: #4ea2eb;
+	border: 1px solid #0c67b7;
+	color: white;
+}
 
 .bc-equation {
 	font-size: 1.2em;
@@ -68,7 +86,6 @@
 .bc-buffyactive .bc-buffyactive-only {
 	display: block;
 }
-
 
 @media (min-width: 768px) {
 	.bc-calculator-buffy {

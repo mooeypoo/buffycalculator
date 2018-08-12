@@ -78,21 +78,23 @@
 						<option value="10" selected>in a cold crypt (10°C)</option>
 						<option value="15">in the cool night (15°C)</option>
 						<option value="18">in room temperature (18°C)</option>
-						<option value="23">in room warmer temperature, in winter (23°C/)</option>
-						<option value="25">in warmer room temperature, in summer (25°C/)</option>
+						<option value="23">in room warmer temperature, in winter (23°C)</option>
+						<option value="25">in warmer room temperature, in summer (25°C)</option>
 						<option value="28">in front of a fireplace (28°C)</option>
 					</select>
+					<span class="bc-label bc-blue bc-initallyhidden" id="vampthermo-initialtemp-display">10°C</span>
 				</div>
 				<div class="bc-calculator-form-line">And then they go
 					<select id="vampthermo-ambienttemp" class="form-control">
 						<option value="10">to a cold crypt (10°C)</option>
 						<option value="15">outside, to the cool night (15°C)</option>
 						<option value="18" selected>into room temperature (18°C)</option>
-						<option value="23">into a room with warmer temperature, in winter (23°C/)</option>
-						<option value="25">into a warmer room temperature, in summer (25°C/)</option>
+						<option value="23">into a room with warmer temperature, in winter (23°C)</option>
+						<option value="25">into a warmer room temperature, in summer (25°C)</option>
 						<option value="28">in front of a fireplace (28°C)</option>
 					</select>
-				</div><br />
+					<span class="bc-label bc-pink bc-initallyhidden" id="vampthermo-ambienttemp-display">18°C</span>
+				</div>
 			</div>
 
 			<div class="vampthermo-result">
@@ -122,7 +124,7 @@
 			<div id="collapseCalculation" class="collapse">
 				<div class="card card-body">
 					<p>The calculation uses the cooling principle of a dead body (since, well, vampires...) -- it is the same principle used to calculate time of death according to the temperature of the body and ambient temperature.</p>
-					<p><strong>T(t) = T[environment] + (T[initial] - T[environment])*e^(-kt)</strong></p>
+					<p class="bc-equation"><strong>T(t) = T[environment] + (T[initial] - T[environment])*e^(-kt)</strong></p>
 					<p>Where <strong>k</strong> is the cooling constant of the body: -0.223</p>
 				</div>
 			</div>

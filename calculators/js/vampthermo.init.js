@@ -100,6 +100,13 @@ $( document ).ready( function () {
 					};
 				};
 
+			$( '#vampthermo-ambienttemp-display' )
+				.html( 'Ambient temperature: <strong>' + ambientTemp + '°C</strong>' )
+				.toggle( true );
+			$( '#vampthermo-initialtemp-display' )
+				.html( 'Initial temperature: <strong>' + initTemp + '°C</strong>' )
+				.toggle( true );
+
 			// Build graph data
 			graphDataHours = {
 				labels: Object.keys( dataHours.curr ),
@@ -224,10 +231,11 @@ $( document ).ready( function () {
 			vampChartMinutes.update();
 		};
 
-	$( [
-		'#vampthermo-initialtemp',
-		'#vampthermo-ambienttemp'
-	].join( ', ' )
+	$(
+		[
+			'#vampthermo-initialtemp',
+			'#vampthermo-ambienttemp'
+		].join( ', ' )
 	).on( 'change', function () {
 		update();
 	} );
