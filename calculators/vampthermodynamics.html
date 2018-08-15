@@ -71,27 +71,36 @@
 				(Read the preamble for assumptions)
 			</div>
 
+			<div class="btn-group btn-group-toggle" id="vampthermo-toggle-temp" role="group" data-toggle="buttons">
+			  <label class="btn btn-primary active">
+			    <input type="radio" name="vampthermo-temptype" id="vampthermo-temptype-celsius" value='c' autocomplete="off" checked>Celsius
+			  </label>
+			  <label class="btn btn-primary">
+			    <input type="radio" name="vampthermo-temptype" id="vampthermo-temptype-fahrenheit" value='f' autocomplete="off">Fahrenheit
+			  </label>
+			</div>
+
 			<!-- form -->
 			<div class="bc-calculator-form">
 				<div class="bc-calculator-form-line">If a vampire spent the entire day
 					<select id="vampthermo-initialtemp" class="form-control">
-						<option value="10" selected>in a cold crypt (10°C)</option>
-						<option value="15">in the cool night (15°C)</option>
-						<option value="18">in room temperature (18°C)</option>
-						<option value="23">in room warmer temperature, in winter (23°C)</option>
-						<option value="25">in warmer room temperature, in summer (25°C)</option>
-						<option value="28">in front of a fireplace (28°C)</option>
+						<option value="10" selected>in a cold crypt</option>
+						<option value="15">in the cool night</option>
+						<option value="20">in room temperature</option>
+						<option value="23">in room warmer temperature, in winter</option>
+						<option value="25">in warmer room temperature, in summer</option>
+						<option value="28">in front of a fireplace</option>
 					</select>
 					<span class="bc-label bc-blue bc-initallyhidden" id="vampthermo-initialtemp-display">10°C</span>
 				</div>
 				<div class="bc-calculator-form-line">And then they go
 					<select id="vampthermo-ambienttemp" class="form-control">
-						<option value="10">to a cold crypt (10°C)</option>
-						<option value="15">outside, to the cool night (15°C)</option>
-						<option value="18" selected>into room temperature (18°C)</option>
-						<option value="23">into a room with warmer temperature, in winter (23°C)</option>
-						<option value="25">into a warmer room temperature, in summer (25°C)</option>
-						<option value="28">in front of a fireplace (28°C)</option>
+						<option value="10">to a cold crypt</option>
+						<option value="15">outside, to the cool night</option>
+						<option value="20" selected>into room temperature</option>
+						<option value="23">into a room with warmer temperature, in winter</option>
+						<option value="25">into a warmer room temperature, in summer</option>
+						<option value="28">in front of a fireplace</option>
 					</select>
 					<span class="bc-label bc-pink bc-initallyhidden" id="vampthermo-ambienttemp-display">18°C</span>
 				</div>
