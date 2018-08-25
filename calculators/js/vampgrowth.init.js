@@ -39,8 +39,7 @@ $( document ).ready( function () {
 		getNumberInText = function ( number ) {
 			var i, noPowerFound, divided,
 				names = [],
-				currResult = number,
-				originalNumber = number,
+				currResult = Number( number || 0 ),
 				powersOfTen = {
 					100: 'gogol',
 					27: 'octillion',
@@ -58,19 +57,22 @@ $( document ).ready( function () {
 					return Number( num );
 				} );
 
-			number = number || 0;
+			while ( currResult > 1 && !noPowerFound ) {
+				noPowerFound = true;
+				// Go backwards over power of ten, find the highest power
+				for ( i = powers.length - 1; i >= 0; i-- ) {
+					divided = currResult / Math.pow( 10, powers[ i ] );
 
-			// Go backwards over power of ten, find the highest power
-			for ( i = powers.length - 1; i >= 0; i-- ) {
-				divided = currResult / Math.pow( 10, powers[ i ] );
-
-				if ( divided > 1 ) {
-					// We found a number; add it to the names
-					names.push( powersOfTen[ powers[ i ] ] );
-					// Change current result to the division so we continue
-					currResult = divided;
-					// We found at least one power
-					noPowerFound = false;
+					if ( divided > 1 ) {
+						// We found a number; add it to the names
+						names.push( powersOfTen[ powers[ i ] ] );
+						// Change current result to the division so we continue
+						currResult = divided;
+						// We found at least one power
+						noPowerFound = false;
+						// Break from the for loop, look for another power
+						break;
+					}
 				}
 			}
 
@@ -205,7 +207,7 @@ $( document ).ready( function () {
 			timeframeSolution = resultsOnly[ resultsOnly.length - 1 ];
 			textBeforeTime = '';
 			text = '';
-            numInWords = '';
+			numInWords = '';
 			if ( Number( timeframeSolution ) <= 0 ) {
 				text = 'ZERO';
 				textBeforeTime = 'There will be no more vampires after ' + resultsOnly.indexOf( 0 ) + ' days';
