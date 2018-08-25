@@ -122,7 +122,7 @@
 						<option value="1825">five years</option>
 						<option value="3650">ten years</option>
 					</select>
-					<div class="vampgrowth-result"> there will be <span class="vampgrowth-result-num">x</span> vampires</div>
+					<div class="vampgrowth-result"> there will be <span class="vampgrowth-result-num">x</span><span class="vampgrowth-result-num-words">x</span> vampires</div>
 					<div class="alert alert-danger vampgrowth-result-beforetime" role="alert"></div>
 				</div>
 			</div>
@@ -166,6 +166,7 @@
 					<ul>
 						<li>The initial calculation was ovredoing the exponentiation, and the results appeared exaggerated. <a href="https://github.com/mooeypoo/buffycalculator/issues/2" target="_blank">This was fixed.</a><br /> Thanks a bunch to <a href="http://products.acrossb.com/" target="_blank">Lee Biernbaum</a> for noticing!</li>
 						<li>Inputs had a bad way of falling-back if there was no data, which basically made choosing 0 impossible. This was fixed.<br />Huge thank you to <a href="https://github.com/jeffreylovitz" target="_blank">Jeffrey Lovitz</a> for finding this and submitting a pull request!</li>
+						<li>Added a string representation of numbers of ten to make big numbers understandable. Thanks to <a href="https://twitter.com/krainboltgreene">@krainboltgreene</a> for the idea!</li>
 					</ul>
 				</div>
 			<!-- </div> -->

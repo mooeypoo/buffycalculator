@@ -13,6 +13,74 @@ $( document ).ready( function () {
 			return Number.parseFloat( num ).toPrecision( precision );
 		},
 		/**
+		 * Convert exponent view that we get from calculations to
+		 * a power of ten. 2.5e+7 would become 2.5*10^7
+		 *
+		 * @param number Given number
+		 * @returns {Number} Power of ten representation
+		 */
+		getExpToPowersOfTen = function ( number ) {
+			var parts,
+				text = precise( number );
+
+			if ( ( String( text ) ).indexOf( 'e+' ) !== -1 ) {
+				parts = String( text ).split( 'e+' );
+				text = parts[ 0 ] +
+					'&times;10<sup>' + parts[ 1 ] + '</sup>';
+			}
+			return text;
+		},
+		/**
+		 * Convert a number into words that describe it by powers of ten
+		 *
+		 * @param number Given number
+		 * @returns Representation of the number with strings representing powers of ten
+		 */
+		getNumberInText = function ( number ) {
+			var i, noPowerFound, divided,
+				names = [],
+				currResult = number,
+				originalNumber = number,
+				powersOfTen = {
+					100: 'gogol',
+					27: 'octillion',
+					24: 'septillion',
+					21: 'sextillion',
+					18: 'quintillion',
+					15: 'quadrillion',
+					12: 'trillion',
+					9: 'billion',
+					6: 'million',
+					3: 'thousand',
+					2: 'hundred'
+				},
+				powers = Object.keys( powersOfTen ).map( function ( num ) {
+					return Number( num );
+				} );
+
+			number = number || 0;
+
+			// Go backwards over power of ten, find the highest power
+			for ( i = powers.length - 1; i >= 0; i-- ) {
+				divided = currResult / Math.pow( 10, powers[ i ] );
+
+				if ( divided > 1 ) {
+					// We found a number; add it to the names
+					names.push( powersOfTen[ powers[ i ] ] );
+					// Change current result to the division so we continue
+					currResult = divided;
+					// We found at least one power
+					noPowerFound = false;
+				}
+			}
+
+			// Flip the order of "names" because we want to display it
+			// from lowest power to highest
+			names = names.reverse();
+
+			return precise( currResult, 2 ) + ' ' + names.join( ' ' );
+		},
+		/**
 		 * Get the solutions for given amount of days.
 		 *
 		 * @param {Number} initialPopulation Initial population
@@ -103,7 +171,7 @@ $( document ).ready( function () {
 		$vampImmigration = $( '#vampgrowth-immigration' ),
 		$vampImmigrationTimeframe = $( '#vampgrowth-immigration-timeframe' ),
 		update = function () {
-			var data, graphData, resultsOnly, timeframeSolution, text, textBeforeTime, parts,
+			var data, graphData, resultsOnly, timeframeSolution, text, numInWords, textBeforeTime,
 				getInputValue = function ( val, fallback ) {
 					fallback = fallback || 0;
 
@@ -137,6 +205,7 @@ $( document ).ready( function () {
 			timeframeSolution = resultsOnly[ resultsOnly.length - 1 ];
 			textBeforeTime = '';
 			text = '';
+            numInWords = '';
 			if ( Number( timeframeSolution ) <= 0 ) {
 				text = 'ZERO';
 				textBeforeTime = 'There will be no more vampires after ' + resultsOnly.indexOf( 0 ) + ' days';
@@ -144,14 +213,13 @@ $( document ).ready( function () {
 				text = 'infinite';
 				textBeforeTime = 'There will be too many vampires to count after ' + resultsOnly.indexOf( Infinity ) + ' days';
 			} else {
-				text = precise( timeframeSolution );
-				if ( ( String( text ) ).indexOf( 'e+' ) !== -1 ) {
-					parts = String( text ).split( 'e+' );
-					text = parts[ 0 ] +
-						'&times;10<sup>' + parts[ 1 ] + '</sup>';
-				}
+				text = getExpToPowersOfTen( timeframeSolution );
+				numInWords = timeframeSolution >= 1000000 ?
+					' (' + getNumberInText( timeframeSolution ) + ')' :
+					'';
 			}
 			$( '.vampgrowth-result-num' ).html( text );
+			$( '.vampgrowth-result-num-words' ).html( numInWords );
 			$( '.vampgrowth-result-beforetime' )
 				.html( textBeforeTime )
 				.toggle( !!textBeforeTime );

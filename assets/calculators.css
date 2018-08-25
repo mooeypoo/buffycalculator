@@ -59,8 +59,14 @@
 }
 
 .vampgrowth-result-num {
-	font-weight: bold;
 	color: red;
+	font-weight: bold;
+}
+
+.vampgrowth-result-num-words {
+	color: #ff4747;
+	font-size: 0.9em;
+	font-weight: bold;
 }
 
 .vampgrowth-result-beforetime {
