@@ -31,6 +31,21 @@ $( document ).ready( function () {
         $resultDemonContainer = $( '.demonrelativity-result-demon-statement' ),
         $resultBuffyContainer = $( '.demonrelativity-result-buffy-statement' ),
         $resultContainer = $( '.demonrelativity-result' ),
+        precise = function ( num, precision ) {
+            precision = precision || 2;
+            return Number.parseFloat( num ).toPrecision( precision );
+        },
+        getBestPrecision = function ( number, max ) {
+            var counter = 1;
+
+            max = max || 100;
+
+            while ( precise( number, counter ) >= max ) {
+                counter++;
+            }
+
+            return precise( number, counter );
+        },
         update = function () {
             var msg, mrPointyContractedLength, mrPointyContractedPercentage,
                 ourTime = Number( $ourTime.val() || 1 ), // We don't allow 0 or undefined, fallback just in case
@@ -40,11 +55,7 @@ $( document ).ready( function () {
                 result = calculateRelativisticSpeeds(
                     ourTime * ourTimespan,
                     demonTime * demonTimespan
-                ),
-                precise = function ( num, precision ) {
-                    precision = precision || 2;
-                    return Number.parseFloat( num * 100 ).toPrecision( precision );
-                };
+                );
 
             if ( result.us === 1 || result.demon === 1 ) {
                 // It's too fast!
@@ -74,11 +85,11 @@ $( document ).ready( function () {
                 // Calculate Mr pointy length contraction
                 mrPointyContractedLength = calculateLengthContraction( result.us * c );
                 // The difference between the original length and new length
-                mrPointyContractedPercentage = ( ( mrPointyOriginalLength - mrPointyContractedLength ) / mrPointyOriginalLength ) * 100;
+                mrPointyContractedPercentage = getBestPrecision( ( ( mrPointyOriginalLength - mrPointyContractedLength ) / mrPointyOriginalLength ) * 100 );
                 // Show result
                 $resultBuffyContainer.empty().append(
                     $( '<h2>' ).append( 'Our universe' ),
-                    $( '<p>' ).append( 'is moving at ' + result.us + ' the speed of light.' )
+                    $( '<p>' ).append( 'is moving at ' + getBestPrecision( result.us, 1 ) + ' the speed of light.' )
                 );
                 $resultDemonContainer.empty().append(
                     $( '<p>' ).append( '... as seen from the demon universe' ),
@@ -95,11 +106,11 @@ $( document ).ready( function () {
                 // Calculate Mr pointy length contraction
                 mrPointyContractedLength = calculateLengthContraction( result.demon * c );
                 // The difference between the original length and new length
-                mrPointyContractedPercentage = ( ( mrPointyOriginalLength - mrPointyContractedLength ) / mrPointyOriginalLength ) * 100;
+                mrPointyContractedPercentage = getBestPrecision( ( ( mrPointyOriginalLength - mrPointyContractedLength ) / mrPointyOriginalLength ) * 100 );
 
                 $resultDemonContainer.empty().append(
                     $( '<h2>' ).append( 'Demon universe' ),
-                    $( '<p>' ).append( 'is moving at ' + result.demon + ' the speed of light.' ),
+                    $( '<p>' ).append( 'is moving at ' + getBestPrecision( result.demon, 1 ) + ' the speed of light.' ),
                 );
                 $resultBuffyContainer.empty().append(
                     $( '<p>' ).append( '... as seen from our universe' ),
