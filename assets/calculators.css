@@ -93,6 +93,67 @@
 	display: block;
 }
 
+/* Demon Relativity Calculator */
+.demonrelativity-wrapper.demonrelativity-loading {
+	display: none;
+}
+
+.demonrelativity-result {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin-bottom: 2em;
+}
+
+.demonrelativity-result-declare {
+	padding: 0.5em;
+	color: white;
+	background-color: rgba(38, 12, 12, 0.3);
+}
+
+.demonrelativity-result-demon,
+.demonrelativity-result-buffy {
+	display: inline-block;
+	text-align: center;
+	width: 50%;
+}
+.demonrelativity-result-demon-display,
+.demonrelativity-result-buffy-display {
+	width: 100%;
+	padding: 0.2em;
+	background-repeat: no-repeat;
+	background-size: auto 260px;
+	background-position: center top;
+	min-height: 260px;
+}
+
+.demonrelativity-result-demon-display {
+	background-image: url( ../assets/memes/buffy-s03e01-demon.png );
+}
+.demonrelativity-result-buffy-display {
+	background-image: url( ../assets/memes/buffy-mr-pointy.gif );
+}
+/*.demonrelativity-result-demon img,*/
+/*.demonrelativity-result-buffy img {*/
+	/*height: 260px;*/
+/*}*/
+
+@media (max-width: 400px) {
+	.demonrelativity-result-demon,
+	.demonrelativity-result-buffy,
+	.demonrelativity-result {
+		width: 100%;
+	}
+
+	.demonrelativity-result-demon-display,
+	.demonrelativity-result-buffy-display {
+		width: 100%;
+		height: auto;
+		min-height: 260px;
+	}
+}
+
+
 @media (min-width: 768px) {
 	.bc-calculator-buffy {
 		float: right;

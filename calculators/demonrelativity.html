@@ -1,0 +1,169 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Moriel Schottlender">
+    <meta name="description" content="Calculators and graphs exploring the science of the Buffyverse">
+    <!-- <link rel="icon" href="../../../../favicon.ico"> -->
+
+    <title>Demon Relativity Calculator : Scientific explorations of the Buffyverse</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../assets/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../assets/album.css" rel="stylesheet">
+    <link href="../assets/calculators.css" rel="stylesheet">
+</head>
+
+<body>
+
+<header>
+    <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4 class="text-white">About</h4>
+                    <p class="text-muted">Scientific explorations of the Buffyverse.</p>
+                    <p><a class="btn btn-primary" href="../index.html" role="button">More calculators</a></p>
+                    <p><a class="btn btn-secondary" href="../whatisthis.html" role="button">What is this?</a></p>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                    <h4 class="text-white">Information</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="http://github.com/mooeypoo/BuffyCalculator" target="_blank" class="text-white">The code</a></li>
+                        <li><a href="http://twitter.com/mooeypoo" target="_blank" class="text-white">@mooeypoo</a></li>
+                        <li><a href="http://moriel.smarterthanthat.com" target="_blank" class="text-white">My Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container d-flex justify-content-between">
+            <a href="../index.html" class="navbar-brand d-flex align-items-center">
+                <strong>BuffyCalculator</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<main role="main">
+
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <h1 class="bc-title">Calculator: Demon Relativity</h1>
+            <div class="alert alert-info" role="alert">
+                Demons are throwing unsuspecting teenagers into a demon-universe where <strong>time runs differently</strong>.
+                Which universe is moving? How fast? How much does the time dilation affect the length of objects in our universe compared to theirs?<br />
+                Play around with the values below to find out!
+            </div>
+
+            <div class="alert alert-warning" role="alert">
+                Want to know what this is about? <a href="http://www.smarterthanthat.com/science-of-scifi/buffyscience/buffyverse-physics-its-about-time-pt-1-relativity/" target="_blank"><strong>Read about Buffy's encounter with the theory of Relativity on my blog!</strong></a>
+            </div>
+
+
+
+            <!-- form -->
+            <div class="bc-calculator-form">
+                <div class="bc-calculator-form-line">For every
+                    <input type="number" min="1" value="1" class="form-control" id="demonrelativity-ourworld-time">
+                    <select id="demonrelativity-ourworld-timespan" class="form-control">
+                        <option value="1" selected>days</option>
+                        <option value="7">weeks</option>
+                        <option value="30">months</option>
+                        <option value="365">years</option>
+                    </select>
+                    in <strong>our world</strong>,
+                </div>
+                <div class="bc-calculator-form-line">demons experience
+                    <input type="number" min="1" value="100" class="form-control" id="demonrelativity-demonworld-time">
+                    <select id="demonrelativity-demonworld-timespan" class="form-control">
+                        <option value="1">days</option>
+                        <option value="7">weeks</option>
+                        <option value="30">months</option>
+                        <option value="365" selected>years</option>
+                    </select>
+                    in the <strong>demon world</strong>
+                </div>
+            <div class="demonrelativity-wrapper demonrelativity-loading">
+                <h2>This means that</h2>
+                <div class="demonrelativity-result">
+                    <div class="demonrelativity-result-demon">
+                        <div class="demonrelativity-result-demon-display">
+                            <h3 class="demonrelativity-result-demon-statement demonrelativity-result-declare">x</h3>
+                        </div>
+                    </div>
+                    <div class="demonrelativity-result-buffy">
+                        <div class="demonrelativity-result-buffy-display">
+                            <h3 class="demonrelativity-result-buffy-statement demonrelativity-result-declare">x</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <a class="btn btn-info" data-toggle="collapse" class="bc-collapse-button" href="#collapseReferences" role="button" aria-expanded="false" aria-controls="collapseReferences">Show references</a>
+            <div id="collapseReferences" class="collapse">
+                <div class="card card-body">
+                    References:
+                    <ul>
+                        <li><a href="https://en.wikipedia.org/wiki/Length_contraction">Wikipedia, Length contraction</a>
+                        <li><a href="http://hyperphysics.phy-astr.gsu.edu/hbase/Relativ/tdil.html">Time dilation and length contraction equations</a>
+                    </ul>
+                </div>
+            </div>
+
+            <a class="btn btn-info" data-toggle="collapse" class="bc-collapse-button" href="#collapseCalculation" role="button" aria-expanded="false" aria-controls="collapseCalculation">Show calculation</a>
+            <div id="collapseCalculation" class="collapse">
+                <div class="card card-body">
+                    <p>The calculation uses the Lorentz Transform to calculate time dilation and velocity of the moving universe.</p>
+                    <p>For all calculations and deeper explanation, <a href="http://www.smarterthanthat.com/science-of-scifi/buffyscience/buffyverse-physics-its-about-time-pt-1-relativity/" target="_blank">please see the full post about Buffy's encounter with Special Relativity</a></p>
+                </div>
+            </div>
+
+
+            <div class="alert alert-info" role="alert">
+                <p>Did you spot an issue? A problem with the code, or the calculation? Do you have an idea I should add in to this calculator, or create any other calculators?<br />
+                    You can submit <a href="https://github.com/mooeypoo/buffycalculator/issues/new" target="_blank">an "issue" on Github</a>, <a href="http://moriel.smarterthanthat.com/contact/">contact me directly by sending me a note</a>, or say hi on twitter (<a href="http://www.twitter.com/mooeypoo" target="_blank">@mooeypoo</a>)</p>
+            </div>
+
+
+        </div>
+    </div>
+
+</main>
+
+<footer class="text-muted">
+    <div class="container">
+        <p class="float-right">
+            <a href="#">Back to top</a>
+        </p>
+        <p>BuffyCalculator &copy; Moriel Schottlender, license MIT. The entire site and code is <a href="http://github.com/mooeypoo/BuffyCalculator">available on github</a>; please consider contributing!</p>
+    </div>
+</footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../assets/jquery-slim.min.js"><\/script>')</script>
+<script src="../assets/popper.min.js"></script>
+<script src="../assets/bootstrap.min.js"></script>
+<script src="../assets/formurlator.oojs.min.js"></script>
+<script src="../assets/mathjs.min.js"></script>
+<script src="js/demonrelativity.init.js"></script>
+
+</body>
+</html>
