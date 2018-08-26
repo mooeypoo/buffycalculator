@@ -103,6 +103,11 @@
 	flex-wrap: wrap;
 	justify-content: space-between;
 	margin-bottom: 2em;
+	background-color: #000;
+}
+
+.demonrelativity-result h2 {
+	font-weight: bold;
 }
 
 .demonrelativity-result-declare {
