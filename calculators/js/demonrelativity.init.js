@@ -123,7 +123,7 @@ $( document ).ready( function () {
                 )
             }
 
-            $resultContainer.removeClass( 'demonrelativity-loading' );
+            $( '.demonrelativity-wrapper' ).removeClass( 'demonrelativity-loading' );
         };
 
     // URL manipulation
