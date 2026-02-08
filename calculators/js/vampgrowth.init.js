@@ -133,9 +133,13 @@ $( document ).ready( function () {
 					population += population * growthFactor;
 				}
 
-				if ( counter.culling % cullingFactorTimeframe === 0 ) {
+				if ( population > 0 && counter.culling % cullingFactorTimeframe === 0 ) {
 					// Remove vampires
 					population -= cullingFactor;
+					if ( population < 0 ) {
+						// Normalize back to 0, in case it went below
+						population = 0;
+					}
 				}
 
 				if ( counter.immigration % immigrationTimeframe === 0 ) {
