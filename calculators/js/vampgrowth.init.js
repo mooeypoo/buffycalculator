@@ -125,6 +125,10 @@ $( document ).ready( function () {
 				return {};
 			}
 
+			// Initialize "day 0" with initial population
+			result[0] = population;
+
+			// Start operation from day 1
 			for ( i = 1; i <= numDays; i++ ) {
 				upAllCounters();
 
